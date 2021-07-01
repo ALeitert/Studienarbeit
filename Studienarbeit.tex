@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper,oneside]{report}
+
+\usepackage{soul}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{colortbl}
+\usepackage{ltxtable}
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,calc}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+% Schrift
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+% UTF8-Zeichencode
+\usepackage[utf8]{inputenc}
+
+% Dokoument in deutsch
+\usepackage{ngerman}
+
+\definecolor{clBlue}{rgb}{.122,.286,.490}
+\definecolor{clChapTxt}{rgb}{.090,.212,.365}
+\newcommand{\parspace}{\setlength{\parskip}{10pt}}
+% Zeilenabstand
+\linespread{1.15}
+\makeatletter
+\renewcommand{\section}{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\rmfamily\Large\bfseries\boldmath\color{clBlue}}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\rmfamily\large\bfseries\boldmath\color{clBlue}}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\rmfamily\normalsize\bfseries\boldmath\color{clBlue}}}
+\def\@makechapterhead#1{%
+    {\parspace
+     \parbox[t][25\p@]{\linewidth}
+     {\parindent \z@ \raggedright \rmfamily
+     \ifnum \c@secnumdepth >\m@ne \vspace{\fill}
+         \normalsize \bfseries \textcolor{clChapTxt}{\@chapapp\space \thechapter}
+     \fi}
+     \par\nobreak  \vskip 5\p@
+     \interlinepenalty\@M   \raggedright \rmfamily
+     \Huge \bfseries\boldmath \textcolor{clChapTxt}{#1}\par\nobreak
+     \vskip 40\p@
+    }}
+\def\@makeschapterhead#1{%
+    {\parspace
+     \parbox[t][25\p@]{\linewidth}{}
+     \parindent \z@ \raggedright
+     \par\nobreak  \vskip 5\p@
+     \interlinepenalty\@M
+     \Huge \rmfamily \bfseries\boldmath  \textcolor{clChapTxt}{#1}\par\nobreak
+     \vskip 40\p@
+  }}
+
+\renewcommand*\l@figure{\@dottedtocline{1}{0em}{2.3em}}
+\renewcommand*\l@table{\@dottedtocline{1}{0em}{2.3em}}
+
+\makeatother
+
+%% Arial als Standard-Schrift
+%\usepackage[scaled]{uarial}
+%\renewcommand*\familydefault{\sfdefault} %% Only if the base font of the document is to be sans serif
+
+% Mathe Symbole
+\usepackage{amssymb}
+\usepackage{amsmath}
+\newcommand{\mO}{\mathcal{O}}
+
+% Mehrere Zeilen in einer Tabelle zusammenfassen
+\usepackage{multirow}
+
+
+% Abstand zwischen Überschrift und nachfolgendem Absatz veringern
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{*2}{*-1.3}
+\titlespacing{\subsection}{0pt}{*2}{*-1.3}
+\titlespacing{\subsubsection}{0pt}{*2}{*-1.3}
+
+% Verknüpfungen in der PDF
+\usepackage{hyperref}
+
+% URLs in den Quellen erkennen
+\usepackage{url}
+
+% Blöcke für Definitionen, Sätze und Beweise
+\usepackage[standard,hyperref]{ntheorem}
+\DeclareRobustCommand{\qed}{%
+  \ifmmode \square%\mathqed
+  \else
+    \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+    \quad\hbox{$\square$}%
+  \fi
+}
+%\newcommand{\qed}{{\flushright$\square$}}
+%\usepackage{amsthm}
+\newtheorem{myTheo}{Satz}
+\newtheorem*{myProof}{Beweis}
+\newtheorem*{myProofSketch}{Beweisskizze}
+\newtheorem{mydef}{Definition}[chapter]
+
+% Quellcode
+\usepackage{listings}
+\lstdefinelanguage{blub}{sensitive=false,morekeywords={for,each,if,to,end,then,Procedure,until,new,in,do}}
+\lstset{
+	basicstyle=\ttfamily\small,
+	keywordstyle=\bfseries,
+	numbers=none,
+	breaklines=true,
+	showstringspaces=false,
+	tabsize=4,
+	captionpos=b,
+	float=htbp,
+%	framecolor=\color{clBlue},
+%	rulecolor=\color{clBlue},
+	frame=TB,
+	language=blub,
+	mathescape=true,
+	morecomment=[l]{//},
+    literate={ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1,
+}
+
+% Bilder
+\usepackage{graphicx}
+
+% Abbildungen aus mehreren Bildern
+\usepackage{subfig}
+
+% Literatur- und Abbildungsverzeichnis mit ins Inhaltsverzeichnis
+\usepackage[nottoc]{tocbibind}
+
+% Literaturverzeichnis
+\usepackage[numbers]{natbib}
+\bibliographystyle{natdin}
+
+% Mehrfachspalten
+\usepackage{multicol}
+
+% Abkürzungen
+
+
+\input{tex-Dateien/Title2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\thesisType{Studienarbeit}
+\title{Graphenbasierte Überprüfung unvollständiger Lösungen in Modellierungsaufgaben}
+\author{Arne Leitert}
+\matNo{6201646}
+\studies{Diplom Informatik}
+\eMail{arne.leitert@uni-rostock.de}
+\chair{Lehrstuhl für e-Learning und kognitive Systeme}
+\university{Universität Rostock \\
+            Fakultät für Informatik und Elektrotechnik}
+
+
+%\includeonly{tex-Dateien/Umsetzung}
+
+\begin{document}
+\pagenumbering{roman}
+
+\parskip 10pt % Abstand nach einem Absatz
+\parindent 0pt % Einrücken bei neuen Absatz
+
+\maketitle
+\raggedright % Linksbündig
+
+\include{tex-Dateien/CC}
+
+\include{tex-Dateien/Abstract}
+
+\parskip 2pt %Abstand nach einem Absatz
+
+\tableofcontents
+\newpage
+\parskip 10pt %Abstand nach einem Absatz
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+\include{tex-Dateien/Einleitung}
+
+\include{tex-Dateien/Grundlagen}
+
+\include{tex-Dateien/Algorithmen}
+
+\include{tex-Dateien/Laufzeittests}
+
+\include{tex-Dateien/Umsetzung}
+
+\include{tex-Dateien/Diskussion}
+
+\appendix
+
+\parskip 2pt
+
+\bibliography{Studienarbeit}
+
+\chapter*{Definitionsverzeichnis}\addcontentsline{toc}{chapter}{Definitionsverzeichnis}
+\listtheorems{mydef}
+
+\listoffigures
+
+\include{tex-Dateien/Abkuerzung}
+
+\include{tex-Dateien/Aenderungen}
+
+%\include{tex-Dateien/Erklaerung}
+
+\end{document}

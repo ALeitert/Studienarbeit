@@ -1,0 +1,184 @@
+\chapter{Diskussion}
+
+Die Arbeit beschäftigte sich mit dem Vergleichen von Graphen. Ziel war es 
+eine algorithmische Grundlage zu schaffen, um die Eingabe eines Lerners 
+bewerten zu können. 
+
+\section{Die untersuchten Algorithmen}
+Um das Ziel zu erreichen wurden verschiedene Algorithmen betrachtet. 
+Einige erwiesen sich als gute Grundlage für weitere Betrachtungen. Andere 
+hingegen scheiterten bereits an kleinen Graphenpaaren.
+
+
+\subsection{Kantengraphen und MCS}
+Ein Ansatz zum Ermitteln einer Lösung war es, die zu vergleichenden 
+Graphen in Kantengraphen umzuwandeln. Als nächstes sollte dann der 
+gemeinsame induzierte Teilgraph (MCS) ermittelt werden. Dieser Ansatz 
+erwies sich jedoch als unbrauchbar. Die Laufzeit ist schlicht zu hoch. Die 
+dafür getesteten Verfahren waren jedoch so ausgelegt, dass sie alle 
+Möglichkeiten durchprobieren. Wäre es möglich die Laufzeit auf ein 
+vertretbares Maß zu senken, dann ließe sich auch untersuchen, ob der 
+Ansatz eines Kantengraphen sinnvoll ist. Dieser bietet die Möglichkeit 
+Kanten unabhängig von Knoten zu betrachten. Es besteht die Hoffnung, dass 
+man auf diese Weise zusätzliche Informationen erhält. Eventuell lassen 
+sich aber die gleichen Informationen auch über Mustersuche im Fehlergraphen 
+ermitteln.
+
+
+\subsection{Probieren aller Permutationen}
+Als nächstes wurde versucht ECGMs direkt zu ermitteln. Der erste Ansatz 
+dabei war das Probieren aller möglichen Permutationen. Das Verfahren 
+ist zwar offensichtlich eines, welches sehr schnell eine zu hohe 
+Laufzeit besitzt, jedoch war es deutlich schneller als die Suche nach 
+einem MCS in Kantengraphen für die gleichen Graphenpaare. Es ist somit 
+als Vergleichsgröße zu verstehen.
+
+
+\subsection{Das B\&B-Verfahren}
+Das B\&B-Verfahren erwies sich als ein zufriedenstellendes. Die Idee daran, 
+abzuschätzen wo im Suchbaum sich das Optimum befindet, beschleunigt die 
+Suche stark. Dabei wurde beiläufig festgestellt, dass es sich bei B\&B sowie 
+dem A*-Algorithmus um fast identische Verfahren handelt. Dies ist insofern 
+interessant, weil diese Ähnlichkeit üblicherweise in entsprechender 
+Literatur nicht erwähnt wird. Ursache dafür mag sein, dass die Intention, 
+die zu diesen Algorithmen führte, bei beiden eine unterschiedliche war. 
+Bei B\&B ging es um die Lösung linearer Optimierungsprobleme. Der 
+A*-Algorithmus hat seine Wurzeln in der Pfadsuche.
+
+
+\subsection{Verbesserung von B\&B}
+Ebenfalls interessant ist die starke Streuung bei der Laufzeit des 
+B\&B-Verfahrens. Hier bleibt die Frage offen, wie sich die Streuung und 
+die Laufzeit verringern lassen. Dabei bieten sich zwei Ansätze: das 
+Finden einer besseren Schranke und das Erkennen und Nutzen von 
+Eigenschaften, die sich auf den Suchaufwand auswirken.
+
+
+\subsubsection{Eine bessere Schranke}
+Je besser die Schranke ist, umso weniger Varianten müssen überprüft 
+werden. Dabei gilt es jedoch zu beachten, dass eine genauere Schranke 
+auch einen Anstieg der Komplexität und somit der Laufzeit zur Folge hat. 
+Dies liegt daran, dass die bestmögliche Schranke keine Abschätzung mehr 
+ist, sondern der korrekte Wert der Lösung. Die eigentliche Suche lässt 
+sich somit auf die Ermittlung der Schranke reduzieren. Da die Berechnung 
+des Graphabstands NP-vollständig ist, gilt dies somit auch für die 
+Berechnung der idealen Schranke.
+
+Ein Ansatz für eine solche Schranke war das Ermitteln eines bipartiten 
+Matchings. Die dadurch ermittelte Schranke war jedoch nicht korrekt. Das 
+Approximieren des Graphabstandes wäre ein weiterer möglicher Ansatz. 
+Lässt sich zu einer möglichen Lösung sagen, wie weit sie höchstens vom 
+Optimum ist, dann lässt sich daraus auch eine untere bzw. obere Schranke 
+formulieren.
+
+
+\subsubsection{Aufwandbestimmende Eigenschaften}
+Bei der Untersuchung der Testergebnisse des B\&B-Verfahrens zeigte sich, 
+dass die Laufzeit von der Kantendichte abhängig sein kann. Dies führte zwar 
+nicht zu einer unmittelbaren Verbesserung, jedoch begründet es die Vermutung, 
+dass mittels weiterer Eigenschaften sich die Laufzeit besser vorhersagen 
+lässt und man die Suche besser optimieren kann.
+
+Mehr Kenntnisse über die Auswirkung verschiedener Grapheigenschaften auf den 
+Aufwand könnte auch die Organisation der Suche verbessern. Im Rahmen dieser 
+Arbeit gelang eine Verbesserung dadurch, dass die Knoten nach Anzahl ihrer 
+Nachbarn sortiert wurden. Eventuell existieren bessere Sortierungen, welche 
+die Suche ebenfalls beschleunigen.
+
+
+\subsection{Evolutionärer Algorithmus}
+Dieses lediglich aus Neugierde und Experimentierfreude motivierte Verfahren 
+erwies sich als ein hinreichend schnelles Verfahren. Bei kleinen 
+Graphenpaaren bedeutete der Mehraufwand für die Verwaltung der Population 
+und das Durchlaufen der Generationen noch einen zeitlichen Nachteil 
+gegenüber anderen Verfahren. Der Anstieg der Laufzeit ist jedoch deutlich 
+geringer. Zusätzlich zur zufriedenstellenden Laufzeit erwies sich auch die 
+Qualität der Lösung als hoch. Für kleine bis mittlere Graphenpaare besteht 
+sogar eine gute Chance, die beste Lösung zu finden.
+
+Potential für weitere Untersuchungen bieten unter anderem die Wahl der 
+Populationsgröße sowie die Abbruchbedingung. Auch die für Rekombination und 
+Mutation verwendeten Methoden sind nur erste Ansätze.
+
+
+\section{Konzept zur praktischen Umsetzung}
+Das vorgestellt Konzept befasst sich mit der Umsetzung der LV-Form, der 
+Komplexitätsverringerung bei der Suche nach einem ECGM und der Suche nach 
+Mustern.
+
+\subsection{Erweiterung}
+Das bestehende Konzept lässt sich erweitern, indem man Knoten und Kanten 
+beschriftet. Mit einer solchen Beschriftung (engl. Label) ließe sich 
+eventuell die Eingabe des Lerners besser nachvollziehen.
+
+So könnte man auf die Vorgabe von Knoten verzichten. Eine solche Vorgabe 
+ist einerseits hilfreich, um die Laufzeit beim Vergleichen der Graphen zu 
+senken (siehe Abschnitt \ref{sec:VorgabeKnoten}). Andererseits kann sie zur eindeutigen 
+Identifikation von Knoten dienen. So unterscheidet sich ein LV-Graph, in dem 
+Wölfe Schafe jagen, strukturell nicht von einem LV-Graph, in dem die Schafe 
+Jagd auf Wölfe machen.
+
+Statt einer solchen Vorgabe 
+vergleicht man die Beschriftung des Lerners mit der Beschriftung der 
+Musterlösung. Mittels der so genannten \emph{Levenshtein-Distanz} zwischen 
+den Beschriftungen, weist man dann die Knoten der Eingabe Knoten der 
+Musterlösung zu. Die Levenshtein-Distanz lässt sich mit quadratischen 
+Zeitaufwand ermitteln \cite{wikiD:LevDis}.
+
+Eine weitere Möglichkeit wäre es (wie bereits in Abschnitt \ref{sec:Graphabstand} 
+erwähnt), die Kostenfunktion für ein ECGM um die Levenshtein-Distanz zu 
+erweitern. Somit würde die Zuordnung indirekt bei der Suche nach einem 
+ECGM erfolgen. Dabei gilt es zu beachten, dass es (bei entsprechender 
+Wahl der Kosten) billiger sein kann einen Knoten zu löschen und einen 
+neuen einzufügen statt die Beschriftung zu ändern. Satz~\ref{alleVausV1enthalten} 
+(Abschnitt~\ref{Vorueberlegungen}) wäre dann nicht mehr gültig und somit 
+kann auch die Laufzeit zur Ermittlung einer Lösung steigen. Es kann aber 
+auch passieren, dass sich bessere Schranken für B\&B formulieren lassen. 
+Dies würde dann zu einer besseren Laufzeit führen.
+
+\subsection{Funktionsfähigkeit in der Praxis}
+Für alle Teile des Konzepts bleibt jedoch die Frage, ob sie in der Praxis 
+funktionieren. So bietet der Ansatz der Knotenfärbung, also das Einteilen 
+der Knoten in Gruppen, die Möglichkeit die Anzahl der möglichen 
+Permutationen und somit die Laufzeit stark zu reduzieren. Eventuell ist 
+dies aber nicht bei allen Modellen sinnvoll.
+
+Auch die Nützlichkeit einer Mustersuche kann bei konkreten Modellen 
+gering sein. Bereits die Voraussetzung dafür kann unbrauchbar sein. 
+Streng genommen beschreibt der Graphabstand nur den Aufwand für den Umbau 
+eines Graphen. Man könnte es als geringsten Reparaturaufwand bezeichnen. 
+Es bleibt die Frage, ob sich mittels Graphabstand und Mustersuche auch 
+die Fehler des Lerners rekonstruieren lassen. Es gibt einen Unterschied 
+zwischen dem Zeigen, wie man es richtig macht, und dem Erklären, was man 
+falsch gemacht hat.
+
+
+\section{Bewerten ohne Musterlösung}
+Ein gänzlich anderer Ansatz ist es, keine Musterlösung vorzugeben. 
+Stattdessen wird überprüft, ob die Eingabe des Lerners bestimmte 
+Eigenschaften erfüllt. Dies bietet sich bei Modellen an, bei denen eine 
+kleine strukturelle Änderung zu einer starken semantischen Änderung führt. 
+Ebenfalls denkbar wäre ein solcher Ansatz, wenn eine große Zahl an 
+möglichen korrekten Lösungen existiert.
+
+Der Ansatz kann jedoch deutlich schwieriger umzusetzen sein. In einem 
+hinreichend komplexen Modell können Eigenschaften nur schwer oder gar 
+nicht überprüfbar sein. Ist ein Modell beispielsweise Turing-vollständig, 
+dann lässt sich das Halteproblem für dieses Modell nicht lösen.
+
+Ebenfalls fraglich ist, ob es hilfreich für den Lerner ist. Man kann dem 
+Lerner zwar sagen, was an seiner Lösung fehlt, aber kann man ihm auch sagen, 
+was er falsch gemacht hat?
+
+\section{Ausblick}
+Es gibt nun mehrere Punkte an denen man das hier vorgestellte weiterentwickeln kann. 
+Aus algorithmischer Sicht wäre es interessant, bessere Schranken für das B\&B-Verfahren 
+zu finden. So werden beispielsweise in \cite{ApproxGED} eine untere und eine obere Schranke 
+vorgestellt. Ebenfalls sinnvoll wäre eine gute Unterscheidungsmöglichkeit, wann B\&B und wann 
+ein evolutionärer Algorithmus verwendet werden soll.
+
+Aus E-Learning-Sicht wären zwei Schritte interessant. Zum einen ist zu überprüfen, ob das in 
+Kapitel~\ref{chp:Umsetzung} vorgestellte Konzept in der Praxis funktioniert. Zum anderen sollten 
+mögliche Muster für die Auswertung der Fehlergraphen gefunden werden. In beiden Fällen können 
+die Ergebnisse stark vom Modell abhängen, das dem Lerner vermittelt werden soll. Eventuell gibt 
+es jedoch für einige Modelle bereits Erfahrungswerte, auf die zurückgegriffen werden kann.
