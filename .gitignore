@@ -1,0 +1,17 @@
+Studienarbeit.pdf
+korrektur.pdf
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.out
+*.thm
+*.toc
+
+*.pdn
